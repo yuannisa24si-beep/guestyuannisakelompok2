@@ -17,7 +17,7 @@ class JabatanController extends Controller
         $jabatans = Jabatan::with('lembaga')->orderBy('level')->get();
         
         // Merujuk ke resources/views/jabatan/jabatan.blade.php
-        return view('jabatan.jabatan', compact('jabatans')); 
+        return view('jabatan', compact('jabatans')); 
     }
 
     /**

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\wargaController;
 
 
 Route::get('/', function () {
@@ -60,4 +61,43 @@ Route::get('/tentang', function () {
 Route::get('/kontak', function () {
     // Tampilan ini akan me-load resources/views/kontak/kontak.blade.php
     return view('kontak');
+});
+
+Route::prefix('admin')->group(function () {
+    // CRUD Jabatan Lembaga (Sudah ada)
+    Route::resource('jabatan', JabatanController::class)->names([
+        'index' => 'jabatan.crud.index',
+        'create' => 'jabatan.crud.create',
+        'store' => 'jabatan.crud.store',
+        'edit' => 'jabatan.crud.edit',
+        'update' => 'jabatan.crud.update',
+        'destroy' => 'jabatan.crud.destroy',
+    ]);
+
+    // Tambahkan CRUD Data Warga
+    Route::resource('warga', WargaController::class)->names([
+        'index' => 'warga.index',
+        'create' => 'warga.create',
+        'store' => 'warga.store',
+        'edit' => 'warga.edit',
+        'update' => 'warga.update',
+        'destroy' => 'warga.destroy',
+    ]);
+});
+
+Route::get('/warga', [WargaController::class, 'index'])->name('warga.public.index'); 
+
+// 2. Rute Admin (CRUD) Warga
+Route::prefix('admin')->group(function () {
+    // ... rute jabatan
+    
+    // CRUD WARGA
+    Route::resource('warga', WargaController::class)->names([ // <-- Gunakan nama resource 'warga'
+        'index' => 'warga.index', 
+        'create' => 'warga.create',
+        'store' => 'warga.store',
+        'edit' => 'warga.edit',
+        'update' => 'warga.update',
+        'destroy' => 'warga.destroy',
+    ]);
 });
