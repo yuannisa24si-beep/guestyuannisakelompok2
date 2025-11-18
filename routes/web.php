@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\JabatanLembagaController;
-
+use App\Http\Controllers\JabatanController;
 
 
 Route::get('/', function () {
@@ -14,7 +13,18 @@ Route::get('anggota/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::resource('jabatanlembaga', JabatanLembagaController::class);
+
+Route::prefix('admin')->group(function () {
+    // BARIS KRITIS 2: HARUS MENGGUNAKAN JABATANCONTROLLER
+    Route::resource('jabatan', JabatanController::class)->names([
+        'index' => 'jabatan.crud.index',
+        'create' => 'jabatan.crud.create',
+        'store' => 'jabatan.crud.store',
+        'edit' => 'jabatan.crud.edit',
+        'update' => 'jabatan.crud.update',
+        'destroy' => 'jabatan.crud.destroy',
+    ]);
+});
 
 Route::get('/', function () {
     // Tampilan ini akan me-load resources/views/home/index.blade.php
@@ -37,11 +47,8 @@ Route::get('/book', function () {
     // Tampilan ini akan me-load resources/views/about/about.blade.php
     return view('book');
 });
-// Rute untuk menampilkan Daftar Jabatan
-Route::get('/jabatan', function () {
-    // Tampilan ini akan me-load resources/views/jabatan/jabatan.blade.php
-    return view('jabatan');
-});
+
+Route::get('/jabatan', [JabatanController::class, 'publicIndex'])->name('jabatan.public');
 
 // Rute untuk menampilkan Halaman Tentang Lembaga
 Route::get('/tentang', function () {
