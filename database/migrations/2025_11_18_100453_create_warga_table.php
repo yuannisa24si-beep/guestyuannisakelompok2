@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nik', 16)->unique(); // NIK biasanya 16 digit dan unik
             $table->text('alamat')->nullable();
             $table->string('telepon', 15)->nullable();
+             $table->string('role');
             $table->timestamps();
         });
     }

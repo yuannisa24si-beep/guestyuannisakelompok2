@@ -46,6 +46,7 @@
                     <th>Nama</th>
                     <th>Alamat</th>
                     <th>Telepon</th>
+                    <th>Role</th>
                     <th style="width: 150px;">Aksi</th>
                 </tr>
             </thead>
@@ -57,6 +58,7 @@
                         <td>{{ $warga->nama }}</td>
                         <td>{{ Str::limit($warga->alamat, 50) }}</td>
                         <td>{{ $warga->telepon }}</td>
+                        <td>{{ $warga->role }}</td>
                         <td>
                             <a href="{{ route('warga.edit', $warga->warga_id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
                             

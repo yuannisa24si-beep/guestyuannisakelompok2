@@ -76,6 +76,15 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto ">
               {{-- Navigasi Diperbarui --}}
+              
+          
+    {{-- 💡 BARU: Jika sudah login, ke halaman warga, jika belum, ke halaman login --}}
+            @auth
+        <a class="nav-link" href="{{ url('warga') }}">DATA WARGA</a> 
+              @else
+        <a class="nav-link" href="{{ route('auth.login') }}">LOGIN</a> 
+              @endauth
+            </li>
               <li class="nav-item @if(request()->is('/')) active @endif">
                 <a class="nav-link" href="{{ url('/') }}">Beranda <span class="sr-only">(current)</span></a>
               </li>

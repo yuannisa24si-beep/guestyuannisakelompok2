@@ -47,6 +47,12 @@
                 @error('telepon') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <textarea name="role" id="role" class="form-control @error('role') is-invalid @enderror" rows="3">{{ old('role') ?? $warga->role }}</textarea>
+                @error('role') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
             <button type="submit" class="btn btn-success">Perbarui Data Warga</button>
         </form>
     </div>

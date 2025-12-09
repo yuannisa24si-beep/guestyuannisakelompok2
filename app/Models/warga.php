@@ -3,25 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+// 💡 PASTIKAN BARIS INI DIGUNAKAN
+use Illuminate\Foundation\Auth\User as Authenticatable; 
 
-class Warga extends Model
+// 💡 PASTIKAN BERGANTI KE Authenticatable
+class Warga extends Authenticatable 
 {
     use HasFactory;
-
-    // Nama tabel di database
+    // ... properti lainnya
     protected $table = 'warga';
-
-    // Kunci utama (Primary Key)
     protected $primaryKey = 'warga_id';
-
-    protected $string = 'telepon';
     
-    // Field yang dapat diisi massal
     protected $fillable = [
         'nama',
         'nik',
         'alamat',
         'telepon',
+        'role',
     ];
+    
+    // Ini diperlukan agar model berfungsi penuh sebagai user
+    public function getAuthPassword()
+    {
+        return ''; 
+    }
 }

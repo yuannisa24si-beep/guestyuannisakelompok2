@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\wargaController;
+use App\Http\Controllers\AuthController;
 
 
 Route::get('/', function () {
@@ -103,3 +104,27 @@ Route::resource('jabatan', JabatanController::class)->names([
 ]);
 
 Route::get('/warga', [WargaController::class, 'index'])->name('warga.index');
+
+Route::get('auth', [AuthController::class, 'index'])->name('auth');
+
+Route::post('auth/login', [AuthController::class, 'login'] )->name('auth.login');
+
+Route::post('auth/logout', [AuthController::class, 'logout'] )->name('auth.logout');
+
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/login', 'index')->name('auth.index'); 
+    Route::get('/login', 'login')->name('auth.login'); // Rute POST yang benar
+    Route::post('/logout', 'logout')->name('auth.logout');
+});
+
+//Route::group(['middleware'=>['checkislogin']],function(){
+
+    //Route::get('/warga', [WargaController::class, 'index'])->name('warga.index');
+
+//});
+
+//Route::group(['middleware'=>['checkrole']],function(){
+
+    //Route::get('/warga', [WargaController::class, 'index'])->name('warga.index');
+
+//});

@@ -4,9 +4,32 @@
 {{-- Menentukan judul halaman --}}
 @section('title', 'Beranda Lembaga')
 
+{{-- 🆕 BLOK BARU: Tombol Profil dan Logout --}}
+@auth
+<div class="user-profile-info">
+    {{-- Tautan ke Halaman Profil --}}
+    <a href="{{ url('profile') }}" class="btn-profile">
+        <i class="fa fa-user"></i>
+        Hai, **{{ Auth::user()->nama }}**
+    </a>
+    
+    {{-- Tautan Logout (Pastikan menggunakan rute 'auth.logout') --}}
+    <a href="{{ route('auth.logout') }}" 
+       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+       class="btn-logout">
+        Keluar
+    </a>
+    
+    {{-- Form tersembunyi untuk POST logout request (Pastikan menggunakan rute 'auth.logout') --}}
+    <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+</div>
+@endauth
+{{-- 🔚 AKHIR BLOK BARU --}}
+
 {{-- Section untuk konten Hero Slider --}}
 @section('hero_slider')
-  <!-- slider section -->
   <section class="slider_section ">
     <div id="customCarousel1" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
@@ -43,13 +66,11 @@
     </div>
 
   </section>
-  <!-- end slider section -->
-@endsection
+  @endsection
 
 {{-- Section untuk konten utama halaman --}}
 @section('content')
 
-  <!-- offer section (Diubah menjadi Informasi Cepat) -->
   <section class="offer_section layout_padding-bottom">
     <div class="offer_container">
       <div class="container ">
@@ -96,9 +117,6 @@
       </div>
     </div>
   </section>
-  <!-- end offer section -->
-
-  <!-- food section (Diubah menjadi Jabatan Populer) -->
   <section class="food_section layout_padding-bottom">
     <div class="container">
       <div class="heading_container heading_center">
@@ -193,7 +211,6 @@
     </div>
   </section>
 
-  <!-- about section (Tetap Tentang Kami, tapi konteks Lembaga) -->
   <section class="about_section layout_padding">
     <div class="container  ">
 
@@ -222,9 +239,6 @@
       </div>
     </div>
   </section>
-  <!-- end about section -->
-
-  <!-- book section (Diubah menjadi Kontak) -->
   <section class="book_section layout_padding">
     <div class="container">
       <div class="heading_container">
@@ -280,8 +294,4 @@
       </div>
     </div>
   </section>
-  <!-- end book section -->
-
-  <!-- client section Dihilangkan untuk fokus pada data lembaga -->
-
-@endsection
+  @endsection

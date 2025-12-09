@@ -49,6 +49,8 @@ class WargaController extends Controller
             'nik' => 'required|string|max:16|unique:warga,nik',
             'alamat' => 'nullable|string',
             'telepon' => 'nullable|string|max:15',
+            'alamat' => 'nullable|string',
+            'role' => 'required|string|max:255'
         ]);
 
         Warga::create($validatedData);
@@ -74,6 +76,7 @@ class WargaController extends Controller
             'nik' => 'required|string|max:16|unique:warga,nik,' . $warga->warga_id . ',warga_id', // Abaikan NIK warga saat ini
             'alamat' => 'nullable|string',
             'telepon' => 'nullable|string|max:15',
+            'role' => 'required|string|max:255',
         ]);
 
         $warga->update($validatedData);
