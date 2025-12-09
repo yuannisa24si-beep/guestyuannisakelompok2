@@ -19,6 +19,25 @@
             + Tambah Warga Baru
         </a>
 
+        <form method="GET" action="{{ route('warga.index') }}" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" 
+                                   name="search" 
+                                   class="form-control" 
+                                   placeholder="Cari berdasarkan Nama atau NIK..." 
+                                   value="{{ $search ?? '' }}"> {{-- Mempertahankan nilai pencarian --}}
+                            <button class="btn btn-outline-secondary" type="submit">
+                                <i class="fas fa-search"></i> Cari
+                            </button>
+                            @if ($search)
+                                {{-- Tombol Reset Pencarian --}}
+                                <a href="{{ route('warga.index') }}" class="btn btn-outline-danger">
+                                    Reset
+                                </a>
+                            @endif
+                        </div>
+                    </form>
+                    
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
@@ -57,6 +76,10 @@
         </table>
     </div>
 
+    <div class="d-flex justify-content-center mt-4">
+        {{ $wargas->links() }}
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

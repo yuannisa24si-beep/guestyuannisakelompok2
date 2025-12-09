@@ -1,5 +1,4 @@
-{{-- Memperluas (extends) master layout app.blade.php --}}
-@extends('layouts.app')
+
 
 {{-- Menentukan judul halaman --}}
 @section('title', 'Beranda Lembaga')
@@ -65,30 +64,96 @@
 @endsection
 
 {{-- Section untuk konten Hero (hero statis) --}}
-@section('hero_slider')
-  <!-- hero section (menggantikan slider section) -->
-  <section class="slider_section ">
-    <div class="container ">
-      <div class="row">
-        <div class="col-md-7 col-lg-6 ">
-          <div class="detail-box">
-            <h1>
-              Sistem Informasi Jabatan Lembaga
-            </h1>
-            <p>
-              Transparansi dan akses mudah terhadap informasi struktur organisasi, jabatan, dan fungsi setiap unit di Lembaga kami untuk mendukung tata kelola yang baik.
-            </p>
-            <div class="btn-box">
-              <a href="{{ url('jabatan') }}" class="btn1">
-                Lihat Jabatan
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+@extends('layouts.app') 
+
+@section('content')
+
+<div class="container mt-5">
+    
+    {{-- Notifikasi Sukses --}}
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    
+    <h2 class="mb-4">Daftar Data Jabatan</h2>
+
+    {{-- Tombol Tambah (Mengarah ke route CREATE admin) --}}
+    <a href="{{ route('jabatan.crud.create') }}" class="btn btn-primary mb-3">
+        + Tambah Jabatan Baru
+    </a>
+
+    {{-- Tabel Data Jabatan (MIRIP SEPERTI TABEL WARGA) --}}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Jabatan</th>
+                    <th>Lembaga</th>
+                    <th>Level</th>
+                    <th>Deskripsi Singkat</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{-- Variabel yang di-pass dari Controller adalah $jabatans --}}
+                @forelse ($jabatans as $item)
+                    <tr>
+                        <td>{{ $item->jabatan_id }}</td>
+                        <td>{{ $item->nama_jabatan }}</td>
+                        <td>{{ $item->lembaga->nama_lembaga ?? 'N/A' }}</td>
+                        <td>{{ $item->level }}</td>
+                        <td>{{ Str::limit($item->deskripsi, 40) }}</td>
+                        <td>
+                            <a href="{{ route('jabatan.crud.edit', $item->jabatan_id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            
+                            {{-- Tombol Hapus --}}
+                            <form action="{{ route('jabatan.crud.destroy', $item->jabatan_id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin hapus data ini?')">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Data jabatan belum tersedia.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-  </section>
-  <!-- end hero section -->
+    
+<form method="GET" action="{{ route('jabatan.index') }}" class="mb-4">
+        <div class="input-group">
+            <input type="text" 
+                   name="search" 
+                   class="form-control" 
+                   placeholder="Cari berdasarkan Nama Jabatan atau Deskripsi..." 
+                   value="{{ $search ?? '' }}"> {{-- Mempertahankan nilai pencarian --}}
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fas fa-search"></i> Cari
+            </button>
+            @if ($search)
+                {{-- Tombol Reset Pencarian --}}
+                <a href="{{ route('jabatan.index') }}" class="btn btn-outline-danger">
+                    Reset
+                </a>
+            @endif
+        </div>
+    </form>
+    {{-- END: FORMULIR FILTER/PENCARIAN --}}
+
+    <div class="table-responsive">
+        {{-- ... (Tabel Jabatan Anda) ... --}}
+    </div>
+    
+    <div class="d-flex justify-content-center mt-4">
+        {{ $jabatans->links() }}
+    </div>
+    
+</div>
+
 @endsection
 
 {{-- Section untuk konten utama halaman --}}

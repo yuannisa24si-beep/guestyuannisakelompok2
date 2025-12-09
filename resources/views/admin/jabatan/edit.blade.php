@@ -22,7 +22,7 @@
         </nav>
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-3 mb-lg-0">
-                <h1 class="h4">Edit Jabatan: **{{ $jabatan->nama_jabatan }}**</h1>
+                <h1 class="h4">Edit Jabatan: {{ $jabatan->nama_jabatan }}</h1>
                 <p class="mb-0">Formulir untuk memperbarui data jabatan.</p>
             </div>
             <div>
@@ -61,7 +61,7 @@
 
                                 {{-- 1. Lembaga ID (Foreign Key) --}}
                                 <div class="mb-3">
-                                    <label for="lembaga_id" class="form-label">Lembaga **(Wajib)**</label>
+                                    <label for="lembaga_id" class="form-label">Lembaga</label>
                                     {{-- $lembagaList harus di-pass dari JabatanController@edit --}}
                                     <select name="lembaga_id" id="lembaga_id" class="form-select @error('lembaga_id') is-invalid @enderror" required>
                                         <option value="">-- Pilih Lembaga --</option>
@@ -79,7 +79,7 @@
 
                                 {{-- 2. Nama Jabatan --}}
                                 <div class="mb-3">
-                                    <label for="nama_jabatan" class="form-label">Nama Jabatan **(Wajib)**</label>
+                                    <label for="nama_jabatan" class="form-label">Nama Jabatan</label>
                                     <input type="text" name="nama_jabatan" id="nama_jabatan" 
                                         class="form-control @error('nama_jabatan') is-invalid @enderror" 
                                         value="{{ old('nama_jabatan') ?? $jabatan->nama_jabatan }}" required 
@@ -91,7 +91,7 @@
 
                                 {{-- 3. Level --}}
                                 <div class="mb-3">
-                                    <label for="level" class="form-label">Level Jabatan **(Wajib)**</label>
+                                    <label for="level" class="form-label">Level Jabatan</label>
                                     <input type="number" name="level" id="level" 
                                         class="form-control @error('level') is-invalid @enderror" 
                                         value="{{ old('level') ?? $jabatan->level }}" required min="1" max="10"

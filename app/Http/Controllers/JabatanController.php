@@ -11,24 +11,49 @@ class JabatanController extends Controller
     /**
      * Menampilkan daftar jabatan untuk halaman publik. (READ Front-end)
      */
-    public function publicIndex()
-    {
-        // Ambil semua jabatan beserta nama lembaganya
-        $jabatans = Jabatan::with('lembaga')->orderBy('level')->get();
-        
-        // Merujuk ke resources/views/jabatan/jabatan.blade.php
-        return view('jabatan', compact('jabatans')); 
+   public function publicIndex(Request $request) // Tambahkan Request $request
+{
+    $search = $request->input('search');
+
+    // Mulai query Jabatan, sertakan relasi lembaga
+    $jabatans = Jabatan::with('lembaga')->orderBy('nama_jabatan', 'asc');
+
+    // Tambahkan kondisi WHERE jika ada kata kunci pencarian
+    if ($search) {
+        $jabatans->where('nama_jabatan', 'LIKE', '%' . $search . '%')
+                 ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
     }
+
+    // Terapkan pagination
+    $jabatans = $jabatans->Simplepaginate(15); 
+    
+    // Asumsi view publik Anda adalah 'jabatan.index_public'
+    return view('jabatan.index_public', compact('jabatans', 'search'));
+}
 
     /**
      * Menampilkan daftar semua jabatan untuk panel admin. (READ Admin)
      */
-    public function index()
-    {
-        $jabatans = Jabatan::with('lembaga')->orderBy('level')->get();
-        // Merujuk ke resources/views/admin/jabatan/index.blade.php
-        return view('admin.jabatan.index', compact('jabatans'));
+   public function index(Request $request)
+{
+    $search = $request->input('search');
+
+    // Mulai query Jabatan, sertakan relasi lembaga
+    $jabatans = Jabatan::with('lembaga')->orderBy('nama_jabatan', 'asc');
+
+    // Tambahkan kondisi WHERE jika ada kata kunci pencarian
+    if ($search) {
+        $jabatans->where('nama_jabatan', 'LIKE', '%' . $search . '%')
+                 ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+                 // Anda juga bisa menambahkan orWhereHas jika ingin mencari berdasarkan nama lembaga
     }
+
+    // Terapkan pagination (gunakan get() jika tidak ingin pagination)
+    $jabatans = $jabatans->paginate(15); 
+    
+    // Kirim data ke view, termasuk kata kunci pencarian
+    return view('admin.jabatan.index', compact('jabatans', 'search'));
+}
 
     /**
      * Menampilkan formulir untuk membuat jabatan baru. (CREATE - Form)
@@ -45,17 +70,23 @@ class JabatanController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validasi input
         $validatedData = $request->validate([
-            'lembaga_id' => 'required|exists:lembaga,lembaga_id',
+            // Hapus 'required' dari validasi
+            'lembaga_id' => 'nullable|integer', 
             'nama_jabatan' => 'required|string|max:255',
             'level' => 'required|integer|min:1',
             'deskripsi' => 'nullable|string',
         ]);
 
+        // FIX KRITIS: Tambahkan Lembaga ID secara manual jika kosong
+        if (!isset($validatedData['lembaga_id']) || empty($validatedData['lembaga_id'])) {
+            // Asumsi: Semua Jabatan default ke Lembaga dengan ID 1
+            $validatedData['lembaga_id'] = 5; 
+        }
+
         // 2. Simpan ke database
         Jabatan::create($validatedData);
-
+        
         return redirect()->route('jabatan.crud.index')->with('success', 'Jabatan berhasil ditambahkan!');
     }
 

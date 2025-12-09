@@ -10,11 +10,26 @@ class WargaController extends Controller
     /**
      * Menampilkan daftar semua warga (READ).
      */
-    public function index()
-    {
-        $wargas = Warga::all();
-        return view('admin.warga.index', compact('wargas'));
+    public function index(Request $request)
+{
+    // Ambil parameter pencarian dari URL
+    $search = $request->input('search');
+
+    // Mulai query Warga
+    $wargas = Warga::orderBy('nama', 'asc');
+
+    // Tambahkan kondisi WHERE jika ada kata kunci pencarian
+    if ($search) {
+        $wargas->where('nama', 'LIKE', '%' . $search . '%')
+               ->orWhere('nik', 'LIKE', '%' . $search . '%');
     }
+
+    // Terapkan pagination
+    $wargas = $wargas->Simplepaginate(1);
+    
+    // Kirim data ke view, termasuk kata kunci pencarian agar form tetap terisi
+    return view('admin.warga.index', compact('wargas', 'search'));
+}
 
     /**
      * Menampilkan formulir untuk membuat warga baru (CREATE - Form).

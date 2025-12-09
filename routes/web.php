@@ -64,16 +64,6 @@ Route::get('/kontak', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    // CRUD Jabatan Lembaga (Sudah ada)
-    Route::resource('jabatan', JabatanController::class)->names([
-        'index' => 'jabatan.crud.index',
-        'create' => 'jabatan.crud.create',
-        'store' => 'jabatan.crud.store',
-        'edit' => 'jabatan.crud.edit',
-        'update' => 'jabatan.crud.update',
-        'destroy' => 'jabatan.crud.destroy',
-    ]);
-
     // Tambahkan CRUD Data Warga
     Route::resource('warga', WargaController::class)->names([
         'index' => 'warga.index',
@@ -101,3 +91,15 @@ Route::prefix('admin')->group(function () {
         'destroy' => 'warga.destroy',
     ]);
 });
+
+// routes/web.php (Dalam grup admin)
+Route::resource('jabatan', JabatanController::class)->names([
+    'index' => 'jabatan.index',
+    'create' => 'jabatan.create',
+    'store' => 'jabatan.store',
+    'edit' => 'jabatan.edit',
+    'update' => 'jabatan.update',
+    'destroy' => 'jabatan.destroy',
+]);
+
+Route::get('/warga', [WargaController::class, 'index'])->name('warga.index');
