@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Data Warga</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style> .container { margin-top: 50px; } </style>
 </head>
 <body>
@@ -20,23 +21,22 @@
         </a>
 
         <form method="GET" action="{{ route('warga.index') }}" class="mb-4">
-                        <div class="input-group">
-                            <input type="text" 
-                                   name="search" 
-                                   class="form-control" 
-                                   placeholder="Cari berdasarkan Nama atau NIK..." 
-                                   value="{{ $search ?? '' }}"> {{-- Mempertahankan nilai pencarian --}}
-                            <button class="btn btn-outline-secondary" type="submit">
-                                <i class="fas fa-search"></i> Cari
-                            </button>
-                            @if ($search)
-                                {{-- Tombol Reset Pencarian --}}
-                                <a href="{{ route('warga.index') }}" class="btn btn-outline-danger">
-                                    Reset
-                                </a>
-                            @endif
-                        </div>
-                    </form>
+            <div class="input-group">
+                <input type="text" 
+                       name="search" 
+                       class="form-control" 
+                       placeholder="Cari berdasarkan Nama, NIK, atau Email..." 
+                       value="{{ $search ?? '' }}">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fas fa-search"></i> Cari
+                </button>
+                @if ($search)
+                    <a href="{{ route('warga.index') }}" class="btn btn-outline-danger">
+                        Reset
+                    </a>
+                @endif
+            </div>
+        </form>
                     
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
@@ -44,7 +44,7 @@
                     <th>ID</th>
                     <th>NIK</th>
                     <th>Nama</th>
-                    <th>Alamat</th>
+                    <th>Email</th> <th>Alamat</th>
                     <th>Telepon</th>
                     <th>Role</th>
                     <th style="width: 150px;">Aksi</th>
@@ -56,7 +56,7 @@
                         <td>{{ $warga->warga_id }}</td>
                         <td>{{ $warga->nik }}</td>
                         <td>{{ $warga->nama }}</td>
-                        <td>{{ Str::limit($warga->alamat, 50) }}</td>
+                        <td>{{ $warga->email }}</td> <td>{{ Str::limit($warga->alamat, 50) }}</td>
                         <td>{{ $warga->telepon }}</td>
                         <td>{{ $warga->role }}</td>
                         <td>
@@ -71,8 +71,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">Belum ada data warga.</td>
-                    </tr>
+                        <td colspan="8" class="text-center">Belum ada data warga.</td> </tr>
                 @endforelse
             </tbody>
         </table>

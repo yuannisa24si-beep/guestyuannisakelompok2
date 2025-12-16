@@ -117,6 +117,19 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout')->name('auth.logout');
 });
 
+Route::get('/auth/login', [Authcontroller::class, 'index'])->name('auth.index');
+// Rute untuk memproses login
+Route::post('/auth/login', [Authcontroller::class, 'login'])->name('auth.login');
+
+// Rute untuk menampilkan form pendaftaran (NEW)
+Route::get('/auth/register', [Authcontroller::class, 'registerForm'])->name('auth.register.form');
+// Rute untuk memproses pendaftaran (NEW)
+Route::post('/auth/register', [Authcontroller::class, 'registerStore'])->name('auth.register.store');
+
+// Rute untuk logout
+Route::post('/auth/logout', [Authcontroller::class, 'logout'])->name('auth.logout');
+
+
 //Route::group(['middleware'=>['checkislogin']],function(){
 
     //Route::get('/warga', [WargaController::class, 'index'])->name('warga.index');

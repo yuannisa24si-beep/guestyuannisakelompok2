@@ -10,13 +10,7 @@
 <body>
     <div class="container">
         <h1 class="mb-4">Edit Data Warga: {{ $warga->nama }}</h1>
-        <a href="{{ route('warga.index') }}" class="btn btn-secondary mb-3">Kembali ke Daftar Warga</a>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>
-            </div>
-        @endif
+// ... (Bagian validasi dan form action)
 
         <form action="{{ route('warga.update', $warga->warga_id) }}" method="POST">
             @csrf
@@ -24,7 +18,6 @@
             
             <div class="mb-3">
                 <label for="nik" class="form-label">NIK (16 Digit)</label>
-                {{-- old() untuk mempertahankan input lama jika validasi gagal, atau ambil dari $warga --}}
                 <input type="text" name="nik" id="nik" class="form-control @error('nik') is-invalid @enderror" value="{{ old('nik') ?? $warga->nik }}" required maxlength="16">
                 @error('nik') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
@@ -33,6 +26,20 @@
                 <label for="nama" class="form-label">Nama Lengkap</label>
                 <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') ?? $warga->nama }}" required>
                 @error('nama') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+            
+            {{-- 🆕 FIELD EMAIL --}}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') ?? $warga->email }}" required>
+                @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            {{-- 🆕 FIELD PASSWORD (OPSIONAL) --}}
+            <div class="mb-3">
+                <label for="password" class="form-label">Password (Kosongkan jika tidak diubah)</label>
+                <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" minlength="6">
+                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
             <div class="mb-3">
@@ -49,7 +56,7 @@
 
             <div class="mb-3">
                 <label for="role" class="form-label">Role</label>
-                <textarea name="role" id="role" class="form-control @error('role') is-invalid @enderror" rows="3">{{ old('role') ?? $warga->role }}</textarea>
+                <input type="text" name="role" id="role" class="form-control @error('role') is-invalid @enderror" value="{{ old('role') ?? $warga->role }}" required>
                 @error('role') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 

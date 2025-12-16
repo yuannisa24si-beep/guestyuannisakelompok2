@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('warga', function (Blueprint $table) {
            $table->id('warga_id'); // Primary Key
             $table->string('nama');
-            $table->string('nik', 16)->unique(); // NIK biasanya 16 digit dan unik
+            $table->string('email')->unique(); // 🆕 Tambahkan email yang unik
+            $table->string('password'); // 🆕 Tambahkan password
+            $table->string('nik', 16)->unique(); // NIK
             $table->text('alamat')->nullable();
             $table->string('telepon', 15)->nullable();
-             $table->string('role');
+            $table->string('role');
+            $table->rememberToken(); // 🆕 Tambahkan remember token untuk otentikasi
             $table->timestamps();
         });
     }
