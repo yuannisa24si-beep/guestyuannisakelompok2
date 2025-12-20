@@ -1,17 +1,29 @@
 @extends('layouts.admin.app')
 
+@section('title', 'Tambah Jabatan Baru')
+
 @section('content')
 
-    {{-- ... (Bagian Header dan Breadcrumb) ... --}}
-    
+    <div class="py-4">
+        <div class="d-flex justify-content-between w-100 flex-wrap">
+            <h1 class="h4">Tambah Jabatan Baru</h1>
+            <div>
+                <a href="{{ route('jabatan.crud.index') }}" class="btn btn-primary">
+                    <i class="fas fa-arrow-left me-1"></i> Kembali ke Daftar
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card border-0 shadow components-section">
                 <div class="card-body">
 
-                    {{-- Menampilkan Error Validasi --}}
+                    {{-- Menampilkan Error Validasi (HARUS ADA DI LUAR FORM AGAR TERLIHAT) --}}
                     @if ($errors->any())
                         <div class="alert alert-danger">
+                            <h4 class="alert-heading">Terdapat Kesalahan!</h4>
                             <ul class="mb-0">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -20,40 +32,45 @@
                         </div>
                     @endif
 
-                    {{-- FORMULIR TAMBAH JABATAN --}}
+                    {{-- 💡 PERBAIKAN KRITIS: Tag <form> harus membungkus SEMUA input --}}
+                    <form action="{{ route('jabatan.crud.store') }}" method="POST">
                         @csrf
                         
                         <div class="row">
                             <div class="col-lg-6 col-md-8 col-sm-12"> 
                                 
-                                {{-- 1. LEMBAGA ID  --}}
+                                {{-- 1. LEMBAGA ID (FIXED DROPDOWN STRUCTURE) --}}
                                 <div class="mb-3">
                                     <label for="lembaga_id" class="form-label">Lembaga</label>
-                                   
-     
-                                        {{-- $lembagaList dikirim dari JabatanController@create --}}
+                                    
+                                    {{-- 💡 Struktur <select> yang benar --}}
+                                    <select name="lembaga_id" id="lembaga_id" 
+                                        class="form-select @error('lembaga_id') is-invalid @enderror" required>
+                                        
+                                        <option value="">-- Pilih Lembaga --</option> 
+                                        
                                         @foreach ($lembagaList as $lembaga)
                                             <option value="{{ $lembaga->lembaga_id }}" 
                                                 {{ old('lembaga_id') == $lembaga->lembaga_id ? 'selected' : '' }}>
                                                 {{ $lembaga->nama_lembaga }}
                                             </option>
                                         @endforeach
+                                        
                                     </select>
+                                    
                                     @error('lembaga_id') 
                                         <div class="invalid-feedback">{{ $message }}</div> 
                                     @enderror
                                 </div>
                                 {{-- END LEMBAGA --}}
 
-
-                                {{-- 2. Nama Jabatan (Dropdown/Custom Input) --}}
-                                {{-- Gunakan kembali input yang Anda inginkan (saya pakai input teks)--}}
+                                {{-- 2. Nama Jabatan --}}
                                 <div class="mb-3">
                                     <label for="nama_jabatan" class="form-label">Nama Jabatan</label>
                                     <input type="text" name="nama_jabatan" id="nama_jabatan" 
                                         class="form-control @error('nama_jabatan') is-invalid @enderror" 
                                         value="{{ old('nama_jabatan') }}" required 
-                                        placeholder="Manajer Pemasaran">
+                                        placeholder="Misalnya: Wakil Kepala Desa">
                                     @error('nama_jabatan') 
                                         <div class="invalid-feedback">{{ $message }}</div> 
                                     @enderror
@@ -84,28 +101,19 @@
                                     @enderror
                                 </div>
 
-                                {{-- Tombol Aksi --}}
+                                {{-- Tombol Aksi (FIXED: Tombol Simpan HARUS type="submit") --}}
                                 <div class="mt-4">
                                     <button type="submit" class="btn btn-success me-2">
-                                        <a href="{{ route('jabatan.index') }}" class="btn btn-outline-secondary">Simpan</a>
+                                        <i class="fas fa-save me-1"></i> Simpan Jabatan
                                     </button>
-
-                                    @if ($errors->any())
-                                <div class="alert alert-danger">
-                                <h4 class="alert-heading">Terdapat Kesalahan!</h4>
-                                <ul class="mb-0">
-                                     @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                                </div>
-                                @endif
-                                
-                                <a href="{{ route('jabatan.index') }}" class="btn btn-outline-secondary">Batal</a>
+                                    
+                                    <a href="{{ route('jabatan.crud.index') }}" class="btn btn-outline-secondary">Batal</a>
+                                    
                                 </div>
                             </div>
                         </div>
                     </form>
+                    {{-- 💡 FORM DITUTUP DI SINI --}}
                 </div>
             </div>
         </div>

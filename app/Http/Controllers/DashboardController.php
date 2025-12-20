@@ -2,24 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Warga;
+use App\Models\User;
+use App\Models\LembagaDesa;
+use App\Models\PerangkatDesa;
+use App\Models\Rt;
+use App\Models\Rw;
+use App\Models\Jabatan;
+use App\Models\AnggotaLembaga;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     /**
-     * Tampilkan halaman dashboard guest.
+     * Tampilkan halaman dashboard public dengan statistik.
      */
     public function index()
     {
-        return view('guest.dasboard');
-        // 1. Ambil Total Jumlah Warga
-        $totalWarga = Warga::count();
+        try {
+            // Ambil semua statistik dari database dengan error handling
+            $totalWarga = Warga::count();
+            $totalUser = User::count();
+            $totalLembagaDesa = LembagaDesa::count();
+            $totalPerangkatDesa = PerangkatDesa::count();
+            $totalRt = Rt::count();
+            $totalRw = Rw::count();
+            $totalJabatan = Jabatan::count();
+            $totalAnggotaLembaga = AnggotaLembaga::count();
+        } catch (\Exception $e) {
+            // Jika ada error, set semua ke 0
+            $totalWarga = 0;
+            $totalUser = 0;
+            $totalLembagaDesa = 0;
+            $totalPerangkatDesa = 0;
+            $totalRt = 0;
+            $totalRw = 0;
+            $totalJabatan = 0;
+            $totalAnggotaLembaga = 0;
+        }
 
-        // 2. Ambil 5 Data Warga Terbaru
-        $recentWarga = Warga::orderBy('created_at', 'desc')->limit(5)->get(); // Urutkan terbaru, ambil 5
-
-        // Kirim data ke view guest.dasboard
-        return view('guest.dasboard', compact('totalWarga', 'recentWarga'));
+        // Kirim data ke view
+        return view('dashboard-public', compact(
+            'totalWarga',
+            'totalUser',
+            'totalLembagaDesa',
+            'totalPerangkatDesa',
+            'totalRt',
+            'totalRw',
+            'totalJabatan',
+            'totalAnggotaLembaga'
+        ));
     }
 
     /**

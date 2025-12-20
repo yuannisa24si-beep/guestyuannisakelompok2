@@ -27,8 +27,8 @@ class JabatanController extends Controller
         // Terapkan pagination
         $jabatans = $jabatans->Simplepaginate(15); 
         
-        // Asumsi view publik Anda adalah 'jabatan.index_public'
-        return view('jabatan.index_public', compact('jabatans', 'search'));
+        // View publik dengan format card
+        return view('public.jabatan', compact('jabatans', 'search'));
     }
 
     /**

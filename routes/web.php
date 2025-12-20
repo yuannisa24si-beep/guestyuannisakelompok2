@@ -3,20 +3,31 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
-use App\Http\Controllers\wargaController;
+use App\Http\Controllers\WargaController;
+use App\Http\Controllers\LembagaDesaController;
+use App\Http\Controllers\PerangkatDesaController;
+use App\Http\Controllers\RwController;
+use App\Http\Controllers\RtController;
+use App\Http\Controllers\AnggotaLembagaController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataCardController;
 
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route untuk menampilkan data dalam bentuk card
+Route::get('/data-cards', [DataCardController::class, 'index'])->name('data.cards');
 Route::get('anggota/', function () {
     return view('anggota');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::prefix('admin')->group(function () {
+// Route admin dengan middleware auth dan checkrole untuk Admin
+Route::prefix('admin')->middleware(['auth', 'checkrole:Admin'])->group(function () {
     // BARIS KRITIS 2: HARUS MENGGUNAKAN JABATANCONTROLLER
     Route::resource('jabatan', JabatanController::class)->names([
         'index' => 'jabatan.crud.index',
@@ -64,7 +75,8 @@ Route::get('/kontak', function () {
     return view('kontak');
 });
 
-Route::prefix('admin')->group(function () {
+// Route admin untuk CRUD Warga - hanya admin yang bisa akses
+Route::prefix('admin')->middleware(['auth', 'checkrole:Admin'])->group(function () {
     // Tambahkan CRUD Data Warga
     Route::resource('warga', WargaController::class)->names([
         'index' => 'warga.index',
@@ -76,34 +88,16 @@ Route::prefix('admin')->group(function () {
     ]);
 });
 
-Route::get('/warga', [WargaController::class, 'index'])->name('warga.public.index'); 
+// Route public untuk semua menu (read-only)
+Route::get('/warga', [WargaController::class, 'publicIndex'])->name('warga.public');
+Route::get('/lembaga-desa', [LembagaDesaController::class, 'publicIndex'])->name('lembaga-desa.public');
+Route::get('/perangkat-desa', [PerangkatDesaController::class, 'publicIndex'])->name('perangkat-desa.public');
+Route::get('/rw', [RwController::class, 'publicIndex'])->name('rw.public');
+Route::get('/rt', [RtController::class, 'publicIndex'])->name('rt.public');
+Route::get('/anggota-lembaga', [AnggotaLembagaController::class, 'publicIndex'])->name('anggota-lembaga.public');
+Route::get('/users', [UserController::class, 'publicIndex'])->name('users.public'); 
 
-// 2. Rute Admin (CRUD) Warga
-Route::prefix('admin')->group(function () {
-    // ... rute jabatan
-    
-    // CRUD WARGA
-    Route::resource('warga', WargaController::class)->names([ // <-- Gunakan nama resource 'warga'
-        'index' => 'warga.index', 
-        'create' => 'warga.create',
-        'store' => 'warga.store',
-        'edit' => 'warga.edit',
-        'update' => 'warga.update',
-        'destroy' => 'warga.destroy',
-    ]);
-});
-
-// routes/web.php (Dalam grup admin)
-Route::resource('jabatan', JabatanController::class)->names([
-    'index' => 'jabatan.index',
-    'create' => 'jabatan.create',
-    'store' => 'jabatan.store',
-    'edit' => 'jabatan.edit',
-    'update' => 'jabatan.update',
-    'destroy' => 'jabatan.destroy',
-]);
-
-Route::get('/warga', [WargaController::class, 'index'])->name('warga.index');
+// Route duplikat dihapus - sudah di-handle di atas
 
 Route::get('auth', [AuthController::class, 'index'])->name('auth');
 
@@ -115,6 +109,14 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'index')->name('auth.index'); 
     Route::get('/login', 'login')->name('auth.login'); // Rute POST yang benar
     Route::post('/logout', 'logout')->name('auth.logout');
+});
+
+// Route admin untuk CRUD Warga - hanya admin yang bisa akses
+Route::prefix('admin')->middleware(['auth', 'checkrole:Admin'])->group(function () {
+    // Route CRUD untuk Warga
+    Route::resource('warga', WargaController::class)
+        ->names('warga.crud') // Menggunakan nama route yang konsisten
+        ->except(['show']); // Tidak memerlukan halaman show
 });
 
 Route::get('/auth/login', [Authcontroller::class, 'index'])->name('auth.index');

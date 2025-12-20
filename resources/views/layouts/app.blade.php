@@ -65,7 +65,14 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="{{ url('/') }}">
             <span>
-              Nama Lembaga
+              @php
+                try {
+                  $lembaga = \App\Models\LembagaDesa::first();
+                  echo $lembaga ? $lembaga->nama_lembaga : 'Nama Lembaga';
+                } catch (\Exception $e) {
+                  echo 'Nama Lembaga';
+                }
+              @endphp
             </span>
           </a>
 
@@ -88,18 +95,38 @@
               <li class="nav-item @if(request()->is('/')) active @endif">
                 <a class="nav-link" href="{{ url('/') }}">Beranda <span class="sr-only">(current)</span></a>
               </li>
+              <li class="nav-item @if(request()->is('dashboard')) active @endif">
+                <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+              </li>
+              <li class="nav-item @if(request()->is('warga')) active @endif">
+                <a class="nav-link" href="{{ route('warga.public') }}">Data Warga</a>
+              </li>
+              <li class="nav-item @if(request()->is('lembaga-desa')) active @endif">
+                <a class="nav-link" href="{{ route('lembaga-desa.public') }}">Lembaga Desa</a>
+              </li>
               <li class="nav-item @if(request()->is('jabatan')) active @endif">
-                <a class="nav-link" href="{{ url('jabatan') }}">Jabatan</a>
+                <a class="nav-link" href="{{ route('jabatan.public') }}">Jabatan</a>
+              </li>
+              <li class="nav-item @if(request()->is('perangkat-desa')) active @endif">
+                <a class="nav-link" href="{{ route('perangkat-desa.public') }}">Perangkat Desa</a>
+              </li>
+              <li class="nav-item @if(request()->is('rw')) active @endif">
+                <a class="nav-link" href="{{ route('rw.public') }}">Data RW</a>
+              </li>
+              <li class="nav-item @if(request()->is('rt')) active @endif">
+                <a class="nav-link" href="{{ route('rt.public') }}">Data RT</a>
+              </li>
+              <li class="nav-item @if(request()->is('anggota-lembaga')) active @endif">
+                <a class="nav-link" href="{{ route('anggota-lembaga.public') }}">Anggota Lembaga</a>
+              </li>
+              <li class="nav-item @if(request()->is('users')) active @endif">
+                <a class="nav-link" href="{{ route('users.public') }}">Users</a>
               </li>
               <li class="nav-item @if(request()->is('tentang')) active @endif">
                 <a class="nav-link" href="{{ url('tentang') }}">Tentang</a>
               </li>
               <li class="nav-item @if(request()->is('kontak')) active @endif">
                 <a class="nav-link" href="{{ url('kontak') }}">Kontak</a>
-              </li>
-              <li class="nav-item">
-                {{-- Kita gunakan URL /warga yang menampilkan Daftar Data Warga (image_935bbe.png) --}}
-                <a class="nav-link" href="{{ url('warga') }}">WARGA</a> 
               </li>
             </ul>
             <div class="user_option">
