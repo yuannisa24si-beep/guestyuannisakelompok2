@@ -10,17 +10,16 @@ class Jabatan extends Model
     use HasFactory;
 
     // Nama tabel di database
-    protected $table = 'jabatan_lembaga';
+    protected $table = 'jabatans';
 
     // Kunci utama (Primary Key)
-    protected $primaryKey = 'jabatan_id';
+    protected $primaryKey = 'id';
 
     // Field yang dapat diisi massal
     protected $fillable = [
         'lembaga_id',
         'nama_jabatan',
         'level',
-        'deskripsi',
     ];
 
     /**

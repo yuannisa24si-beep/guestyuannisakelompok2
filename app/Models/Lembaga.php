@@ -10,7 +10,7 @@ class Lembaga extends Model
     use HasFactory;
 
     // Nama tabel di database
-    protected $table = 'lembaga';
+    protected $table = 'lembaga_desa';
 
     // Kunci utama (Primary Key)
     protected $primaryKey = 'lembaga_id';
@@ -18,7 +18,8 @@ class Lembaga extends Model
     // Field yang dapat diisi massal
     protected $fillable = [
         'nama_lembaga',
-        'alamat',
+        'deskripsi',
+        'kontak',
     ];
 
     /**
