@@ -108,6 +108,8 @@
             transition: all 0.3s;
             border-bottom: 3px solid transparent;
             text-decoration: none;
+            cursor: pointer;
+            display: block;
         }
 
         .nav-menu .nav-link:hover {
@@ -225,11 +227,18 @@
             .nav-menu {
                 overflow-x: auto;
                 white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .nav-menu .d-flex {
+                flex-wrap: nowrap !important;
             }
             
             .nav-menu .nav-link {
                 display: inline-block;
                 padding: 12px 15px;
+                white-space: nowrap;
+                min-width: auto;
             }
         }
     </style>
@@ -315,6 +324,25 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Ensure all navigation links are clickable
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to navigation links
+            const navLinks = document.querySelectorAll('.nav-menu .nav-link');
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    // Allow normal navigation
+                    console.log('Navigating to:', this.href);
+                });
+            });
+            
+            // Debug: Log all navigation links
+            console.log('Navigation links found:', navLinks.length);
+            navLinks.forEach(function(link, index) {
+                console.log(`Link ${index + 1}:`, link.textContent.trim(), '→', link.href);
+            });
+        });
+    </script>
     @yield('scripts')
 </body>
 </html>

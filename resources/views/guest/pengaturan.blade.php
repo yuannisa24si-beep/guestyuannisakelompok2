@@ -79,43 +79,7 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="mb-0">
-                    <i class="fas fa-palette me-2"></i>
-                    Tema Aplikasi
-                </h6>
-            </div>
-            <div class="card-body">
-                <p class="text-muted">Aplikasi ini menggunakan tema ungu (purple) yang konsisten di seluruh interface.</p>
-                <div class="row">
-                    <div class="col-md-3 mb-3">
-                        <div class="p-3 text-center rounded" style="background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);">
-                            <small class="text-white">Primary Purple</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="p-3 text-center rounded" style="background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);">
-                            <small class="text-white">Secondary Purple</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="p-3 text-center rounded" style="background: #ede9fe;">
-                            <small class="text-dark">Light Purple</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="p-3 text-center rounded" style="background: #5b21b6;">
-                            <small class="text-white">Dark Purple</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="row mt-4">
     <div class="col-12">

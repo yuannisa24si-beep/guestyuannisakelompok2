@@ -5,7 +5,46 @@ use Illuminate\Support\Facades\DB;
 
 // Redirect root to guest dashboard
 Route::get('/', function () {
+    // Debug: pastikan redirect berfungsi
     return redirect()->route('guest.dashboard');
+});
+
+// Test route untuk debugging
+Route::get('/test-redirect', function () {
+    return response()->json([
+        'message' => 'Redirect test',
+        'guest_dashboard_url' => route('guest.dashboard'),
+        'current_url' => request()->url()
+    ]);
+});
+
+// Test database connection simple
+Route::get('/test-db-simple', function () {
+    try {
+        $connection = DB::connection();
+        $pdo = $connection->getPdo();
+        
+        // Test query sederhana
+        $result = DB::select('SHOW TABLES');
+        
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Database connected successfully',
+            'database' => config('database.connections.mysql.database'),
+            'tables' => $result
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'config' => [
+                'host' => config('database.connections.mysql.host'),
+                'port' => config('database.connections.mysql.port'),
+                'database' => config('database.connections.mysql.database'),
+                'username' => config('database.connections.mysql.username')
+            ]
+        ]);
+    }
 });
 
 // Guest Routes with database data

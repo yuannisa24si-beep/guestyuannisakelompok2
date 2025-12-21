@@ -63,42 +63,7 @@
     </div>
 </div>
 
-<!-- Access Information -->
-<div class="row justify-content-center mt-4">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-shield-alt"></i> Informasi Akses
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="alert alert-info">
-                    <h6><i class="fas fa-info-circle me-2"></i>Mode Guest</h6>
-                    <p class="mb-0">Anda sedang mengakses sistem dalam mode guest dengan akses terbatas untuk melihat data publik.</p>
-                </div>
-                
-                <h6>Hak Akses Anda:</h6>
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-check text-success me-2"></i> Melihat data warga</li>
-                    <li><i class="fas fa-check text-success me-2"></i> Melihat informasi lembaga desa</li>
-                    <li><i class="fas fa-check text-success me-2"></i> Melihat struktur jabatan</li>
-                    <li><i class="fas fa-check text-success me-2"></i> Melihat data perangkat desa</li>
-                    <li><i class="fas fa-check text-success me-2"></i> Melihat data RW dan RT</li>
-                    <li><i class="fas fa-check text-success me-2"></i> Melihat anggota lembaga</li>
-                </ul>
 
-                <h6 class="mt-4">Batasan Akses:</h6>
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-times text-danger me-2"></i> Tidak dapat menambah data</li>
-                    <li><i class="fas fa-times text-danger me-2"></i> Tidak dapat mengubah data</li>
-                    <li><i class="fas fa-times text-danger me-2"></i> Tidak dapat menghapus data</li>
-                    <li><i class="fas fa-times text-danger me-2"></i> Tidak dapat mengakses pengaturan admin</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- System Information -->
 <div class="row justify-content-center mt-4">
