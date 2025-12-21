@@ -9,32 +9,7 @@ use Illuminate\Support\Facades\Hash; // 💡 TAMBAHKAN INI UNTUK HASH PASSWORD
 class WargaController extends Controller
 {
     /**
-     * Tampilkan halaman public - hanya view data
-     */
-    public function publicIndex(Request $request)
-    {
-        try {
-            $search = $request->input('search');
-            $wargas = Warga::orderBy('nama', 'asc');
-            
-            if ($search) {
-                $wargas->where(function($q) use ($search) {
-                    $q->where('nama', 'LIKE', '%' . $search . '%')
-                       ->orWhere('nik', 'LIKE', '%' . $search . '%')
-                       ->orWhere('email', 'LIKE', '%' . $search . '%');
-                });
-            }
-            
-            $wargas = $wargas->simplePaginate(16);
-        } catch (\Exception $e) {
-            $wargas = \Illuminate\Pagination\Paginator::make([], 16, 1);
-            $search = null;
-        }
-        return view('public.warga', compact('wargas', 'search'));
-    }
-
-    /**
-     * Menampilkan daftar semua warga (READ) - Admin.
+     * Menampilkan daftar semua warga (READ).
      */
     public function index(Request $request)
 {
