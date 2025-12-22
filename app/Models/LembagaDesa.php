@@ -5,29 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LembagaDesa extends Model
+class Lembaga extends Model
 {
     use HasFactory;
 
-    protected $table = 'lembaga'; 
+    // Nama tabel di database
+    protected $table = 'lembaga_desa';
+
+    // Kunci utama (Primary Key)
     protected $primaryKey = 'lembaga_id';
-    
+
+    // Field yang dapat diisi massal
     protected $fillable = [
         'nama_lembaga',
-        'alamat',
+        'deskripsi',
+        'kontak',
     ];
 
-    
-    public function jabatans()
+    /**
+     * Mendefinisikan relasi: Setiap Lembaga memiliki banyak Jabatan.
+     */
+    public function jabatan()
     {
         return $this->hasMany(Jabatan::class, 'lembaga_id', 'lembaga_id');
-    }
-
-    /**
-     * Relasi ke Anggota Lembaga
-     */
-    public function anggotaLembaga()
-    {
-        return $this->hasMany(AnggotaLembaga::class, 'lembaga_id', 'lembaga_id');
     }
 }

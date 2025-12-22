@@ -11,7 +11,6 @@ class PerangkatDesa extends Model
 
     protected $table = 'perangkat_desa';
     protected $primaryKey = 'perangkat_id';
-    public $incrementing = true;
 
     protected $fillable = [
         'warga_id',
@@ -20,7 +19,7 @@ class PerangkatDesa extends Model
         'kontak',
         'periode_mulai',
         'periode_selesai',
-        'foto',
+        'foto'
     ];
 
     protected $casts = [
@@ -31,10 +30,5 @@ class PerangkatDesa extends Model
     public function warga()
     {
         return $this->belongsTo(Warga::class, 'warga_id', 'warga_id');
-    }
-
-    public function getFotoUrlAttribute(): ?string
-    {
-        return $this->foto ? asset('storage/' . $this->foto) : null;
     }
 }

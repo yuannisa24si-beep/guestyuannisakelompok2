@@ -9,13 +9,24 @@ class Jabatan extends Model
 {
     use HasFactory;
 
-    protected $table = 'jabatan_lembaga';
-    protected $primaryKey = 'jabatan_id';
+    // Nama tabel di database
+    protected $table = 'jabatans';
 
-    protected $fillable = ['lembaga_id', 'nama_jabatan', 'level'];
+    // Kunci utama (Primary Key)
+    protected $primaryKey = 'id';
 
+    // Field yang dapat diisi massal
+    protected $fillable = [
+        'lembaga_id',
+        'nama_jabatan',
+        'level',
+    ];
+
+    /**
+     * Mendefinisikan relasi: Setiap Jabatan dimiliki oleh satu Lembaga.
+     */
     public function lembaga()
     {
-        return $this->belongsTo(LembagaDesa::class, 'lembaga_id', 'lembaga_id');
+        return $this->belongsTo(Lembaga::class, 'lembaga_id', 'lembaga_id');
     }
-} 
+}

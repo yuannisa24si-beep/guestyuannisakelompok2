@@ -19,6 +19,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         try {
             // Ambil semua statistik dari database dengan error handling
             $totalWarga = Warga::count();
@@ -52,6 +53,14 @@ class DashboardController extends Controller
             'totalJabatan',
             'totalAnggotaLembaga'
         ));
+=======
+        return view('guest.dashboard', [
+            'totalLembaga' => 20,
+            'totalJabatan' => 20,
+            'totalWarga' => 100,
+            'totalPerangkat' => 20
+        ]);
+>>>>>>> 2331ad771f69e079057486a442c1747d44b9caf5
     }
 
     /**

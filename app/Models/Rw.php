@@ -18,36 +18,13 @@ class Rw extends Model
         'keterangan'
     ];
 
-    /**
-     * Relasi ke RT (One to Many)
-     */
-    public function rts()
-    {
-        return $this->hasMany(Rt::class, 'rw_id', 'rw_id');
-    }
-
-    /**
-     * Relasi ke Warga sebagai Ketua RW (Many to One)
-     */
     public function ketuaRw()
     {
         return $this->belongsTo(Warga::class, 'ketua_rw_warga_id', 'warga_id');
     }
 
-    /**
-     * Scope untuk search
-     */
-    public function scopeSearch($query, $search)
+    public function rts()
     {
-        if ($search) {
-            return $query->where(function ($q) use ($search) {
-                $q->where('nomor_rw', 'like', '%' . $search . '%')
-                  ->orWhere('keterangan', 'like', '%' . $search . '%')
-                  ->orWhereHas('ketuaRw', function ($q) use ($search) {
-                      $q->where('nama', 'like', '%' . $search . '%');
-                  });
-            });
-        }
-        return $query;
+        return $this->hasMany(Rt::class, 'rw_id', 'rw_id');
     }
 }
