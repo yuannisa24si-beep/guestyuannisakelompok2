@@ -11,21 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rw', function (Blueprint $table) {
-            $table->id('rw_id');
-            $table->string('nomor_rw', 10)->unique();
-            $table->unsignedBigInteger('ketua_rw_warga_id')->nullable();
-            $table->text('keterangan')->nullable();
+        Schema::create('warga_files', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('warga_id');
+            $table->string('original_name');
+            $table->string('file_path');
+            $table->unsignedBigInteger('file_size')->default(0);
+            $table->string('mime_type')->nullable();
             $table->timestamps();
 
             // Foreign key
-            $table->foreign('ketua_rw_warga_id')
+            $table->foreign('warga_id')
                 ->references('warga_id')
                 ->on('wargas')
-                ->onDelete('set null');
-
-            // Index
-            $table->index('ketua_rw_warga_id', 'rw_ketua_rw_warga_id_foreign');
+                ->onDelete('cascade');
         });
     }
 
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rw');
+        Schema::dropIfExists('warga_files');
     }
 };

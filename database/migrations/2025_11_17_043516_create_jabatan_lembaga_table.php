@@ -11,13 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('jabatan_lembaga', function (Blueprint $table) {
-            $table->id('jabatan_id'); // Kunci Utama (Primary Key - PK)
-            $table->foreignId('lembaga_id')->constrained('lembaga', 'lembaga_id')->onDelete('cascade'); // Kunci Asing (Foreign Key - FK)
+        Schema::create('jabatans', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('lembaga_id');
             $table->string('nama_jabatan');
-            $table->integer('level')->comment('Level jabatan: 1 (Puncak), 2, 3, dst.');
-            $table->text('deskripsi')->nullable();
+            $table->string('level');
             $table->timestamps();
+
+            // Foreign key
+            $table->foreign('lembaga_id')
+                ->references('lembaga_id')
+                ->on('lembaga_desa')
+                ->onDelete('cascade');
+
+            // Index
+            $table->index('lembaga_id', 'jabatans_lembaga_id_foreign');
         });
     }
 
@@ -26,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jabatan_lembaga');
+        Schema::dropIfExists('jabatans');
     }
 };

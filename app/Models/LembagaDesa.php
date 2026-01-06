@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lembaga extends Model
+class LembagaDesa extends Model
 {
     use HasFactory;
 
@@ -25,8 +25,21 @@ class Lembaga extends Model
     /**
      * Mendefinisikan relasi: Setiap Lembaga memiliki banyak Jabatan.
      */
-    public function jabatan()
+    public function jabatans()
     {
         return $this->hasMany(Jabatan::class, 'lembaga_id', 'lembaga_id');
     }
+
+    /**
+     * Mendefinisikan relasi: Setiap Lembaga memiliki banyak Anggota Lembaga.
+     */
+    public function anggotaLembaga()
+    {
+        return $this->hasMany(AnggotaLembaga::class, 'lembaga_id', 'lembaga_id');
+    }
+}
+
+// Alias untuk kompatibilitas dengan kode lama
+class Lembaga extends LembagaDesa
+{
 }

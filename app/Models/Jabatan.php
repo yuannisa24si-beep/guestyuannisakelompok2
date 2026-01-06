@@ -27,6 +27,14 @@ class Jabatan extends Model
      */
     public function lembaga()
     {
-        return $this->belongsTo(Lembaga::class, 'lembaga_id', 'lembaga_id');
+        return $this->belongsTo(LembagaDesa::class, 'lembaga_id', 'lembaga_id');
+    }
+
+    /**
+     * Mendefinisikan relasi: Setiap Jabatan memiliki banyak Anggota Lembaga.
+     */
+    public function anggotaLembaga()
+    {
+        return $this->hasMany(AnggotaLembaga::class, 'jabatan_id', 'id');
     }
 }

@@ -27,7 +27,7 @@ class AnggotaLembaga extends Model
 
     public function lembaga()
     {
-        return $this->belongsTo(Lembaga::class, 'lembaga_id', 'lembaga_id');
+        return $this->belongsTo(LembagaDesa::class, 'lembaga_id', 'lembaga_id');
     }
 
     public function warga()
@@ -37,6 +37,6 @@ class AnggotaLembaga extends Model
 
     public function jabatan()
     {
-        return $this->belongsTo(Jabatan::class, 'jabatan_id', 'id');
+        return $this->belongsTo(Jabatan::class, 'jabatan_id', 'jabatan_id');
     }
 }

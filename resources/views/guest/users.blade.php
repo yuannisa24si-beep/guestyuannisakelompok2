@@ -19,7 +19,7 @@
             <div class="card-header">
                 <h6 class="mb-0">
                     <i class="fas fa-user me-2"></i>
-                    {{ $user->nama }}
+                    {{ $user->name }}
                 </h6>
             </div>
             <div class="card-body">
@@ -47,8 +47,8 @@
 
                 <div class="row text-center mt-3">
                     <div class="col-12">
-                        <h6 class="text-primary mb-0">{{ $user->warga_id }}</h6>
-                        <small class="text-muted">User ID</small>
+                        <h6 class="text-primary mb-0">{{ $users->id }}</h6>
+                        <small class="text-muted">Users ID</small>
                     </div>
                 </div>
             </div>

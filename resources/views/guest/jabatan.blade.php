@@ -53,7 +53,7 @@
                 <div class="row text-center mt-3">
                     <div class="col-6">
                         <div class="border-end">
-                            <h6 class="text-primary mb-0">{{ $jabatan->jabatan_id }}</h6>
+                            <h6 class="text-primary mb-0">{{ $jabatan->id }}</h6>
                             <small class="text-muted">ID Jabatan</small>
                         </div>
                     </div>

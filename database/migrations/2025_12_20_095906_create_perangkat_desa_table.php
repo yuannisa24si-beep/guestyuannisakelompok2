@@ -13,13 +13,23 @@ return new class extends Migration
     {
         Schema::create('perangkat_desa', function (Blueprint $table) {
             $table->id('perangkat_id');
-            $table->foreignId('warga_id')->constrained('warga', 'warga_id')->onDelete('cascade');
+            $table->unsignedBigInteger('warga_id');
             $table->string('jabatan');
-            $table->string('nip')->nullable();
-            $table->string('kontak')->nullable();
+            $table->string('nip')->nullable()->unique();
+            $table->string('kontak')->nullable()->unique();
             $table->date('periode_mulai');
             $table->date('periode_selesai')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
+
+            // Foreign key
+            $table->foreign('warga_id')
+                ->references('warga_id')
+                ->on('wargas')
+                ->onDelete('cascade');
+
+            // Index
+            $table->index('warga_id', 'perangkat_desa_warga_id_foreign');
         });
     }
 

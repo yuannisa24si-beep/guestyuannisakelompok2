@@ -24,28 +24,35 @@
             </div>
             <div class="card-body">
                 <div class="mb-2">
-                    <small class="text-muted">NIK:</small>
-                    <p class="mb-1 font-monospace">{{ $warga->nik }}</p>
+                    <small class="text-muted">No. KTP:</small>
+                    <p class="mb-1 font-monospace">{{ $warga->no_ktp }}</p>
                 </div>
                 
                 <div class="mb-2">
-                    <small class="text-muted">Role:</small>
+                    <small class="text-muted">Jenis Kelamin:</small>
                     <p class="mb-1">
-                        <i class="fas fa-user-tag me-1"></i>{{ ucfirst($warga->role) }}
+                        <i class="fas fa-venus-mars me-1"></i>{{ $warga->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}
                     </p>
                 </div>
 
                 <div class="mb-2">
-                    <small class="text-muted">Alamat:</small>
+                    <small class="text-muted">Agama:</small>
                     <p class="mb-1">
-                        <i class="fas fa-map-marker-alt me-1"></i>{{ $warga->alamat ?? 'Alamat tidak tersedia' }}
+                        <i class="fas fa-pray me-1"></i>{{ $warga->agama }}
+                    </p>
+                </div>
+
+                <div class="mb-2">
+                    <small class="text-muted">Pekerjaan:</small>
+                    <p class="mb-1">
+                        <i class="fas fa-briefcase me-1"></i>{{ $warga->pekerjaan ?? 'Tidak ada data' }}
                     </p>
                 </div>
 
                 <div class="mb-2">
                     <small class="text-muted">Telepon:</small>
                     <p class="mb-1">
-                        <i class="fas fa-phone me-1"></i>{{ $warga->telepon ?? 'Tidak ada telepon' }}
+                        <i class="fas fa-phone me-1"></i>{{ $warga->telp ?? 'Tidak ada telepon' }}
                     </p>
                 </div>
 
@@ -95,12 +102,12 @@
                         <p class="text-muted mb-0">Total Warga</p>
                     </div>
                     <div class="col-md-3">
-                        <h4 class="text-info">{{ $wargas->where('role', 'warga')->count() }}</h4>
-                        <p class="text-muted mb-0">Role Warga</p>
+                        <h4 class="text-info">{{ $wargas->where('jenis_kelamin', 'L')->count() }}</h4>
+                        <p class="text-muted mb-0">Laki-laki</p>
                     </div>
                     <div class="col-md-3">
-                        <h4 class="text-warning">{{ $wargas->where('role', 'admin')->count() }}</h4>
-                        <p class="text-muted mb-0">Role Admin</p>
+                        <h4 class="text-warning">{{ $wargas->where('jenis_kelamin', 'P')->count() }}</h4>
+                        <p class="text-muted mb-0">Perempuan</p>
                     </div>
                     <div class="col-md-3">
                         <h4 class="text-success">{{ $wargas->whereNotNull('email')->count() }}</h4>

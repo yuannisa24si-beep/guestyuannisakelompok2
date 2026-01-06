@@ -11,22 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('warga', function (Blueprint $table) {
-           $table->id('warga_id'); // Primary Key
-            $table->string('nama');
-            $table->string('email')->unique(); // 🆕 Tambahkan email yang unik
-            $table->string('password'); // 🆕 Tambahkan password
-            $table->string('nik', 16)->unique(); // NIK
-            $table->text('alamat')->nullable();
-            $table->string('telepon', 15)->nullable();
-            $table->string('role');
-            $table->rememberToken(); // 🆕 Tambahkan remember token untuk otentikasi
+        Schema::create('wargas', function (Blueprint $table) {
+            $table->id('warga_id');
+            $table->string('no_ktp', 16)->unique();
+            $table->string('nama', 100);
+            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->string('agama', 20);
+            $table->string('pekerjaan', 50);
+            $table->string('telp', 20);
+            $table->string('email', 100)->nullable();
+            $table->string('foto_profil_path', 255)->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('warga');
+        Schema::dropIfExists('wargas');
     }
 };
