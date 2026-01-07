@@ -13,19 +13,10 @@ return new class extends Migration
     {
         Schema::create('rw', function (Blueprint $table) {
             $table->id('rw_id');
-            $table->string('nomor_rw', 10)->unique();
-            $table->unsignedBigInteger('ketua_rw_warga_id')->nullable();
+            $table->string('nomor_rw', 3);
+            $table->foreignId('ketua_rw_warga_id')->constrained('warga', 'warga_id')->onDelete('cascade');
             $table->text('keterangan')->nullable();
             $table->timestamps();
-
-            // Foreign key
-            $table->foreign('ketua_rw_warga_id')
-                ->references('warga_id')
-                ->on('wargas')
-                ->onDelete('set null');
-
-            // Index
-            $table->index('ketua_rw_warga_id', 'rw_ketua_rw_warga_id_foreign');
         });
     }
 

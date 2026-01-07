@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lembaga_desa', function (Blueprint $table) {
-            $table->id('lembaga_id');
-            $table->string('nama_lembaga', 100);
-            $table->string('deskripsi', 225);
-            $table->string('kontak', 255)->nullable();
+        Schema::create('lembaga', function (Blueprint $table) {
+            $table->id('lembaga_id'); // Kunci utama (Primary Key)
+            $table->string('nama_lembaga')->unique();
+            $table->text('alamat')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lembaga_desa');
+        Schema::dropIfExists('lembaga');
     }
 };
