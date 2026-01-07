@@ -47,8 +47,8 @@
 
                 <div class="row text-center mt-3">
                     <div class="col-12">
-                        <h6 class="text-primary mb-0">{{ $users->id }}</h6>
-                        <small class="text-muted">Users ID</small>
+                        <h6 class="text-primary mb-0">{{ $user->id }}</h6>
+                        <small class="text-muted">User ID</small>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,6 @@
     @endforelse
 </div>
 
-<!-- Summary Card -->
 <div class="row mt-4">
     <div class="col-12">
         <div class="card">
